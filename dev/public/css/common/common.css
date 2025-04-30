@@ -1,0 +1,41 @@
+
+.container-fluid{
+	font-size:1.2em;
+}
+
+#search_dtl_div{
+	display:flex;
+	justify-content:flex-start;
+	flex-wrap:wrap;
+}
+
+.search_btn_x{
+	display:inline-block;
+	width:20em;
+}
+
+#csh_div_w{
+	display:none;
+	margin-bottom:12px;
+}
+
+#csh_div{
+	display:inline-block;
+}
+
+.tool_btn_w{
+	display:inline-block;
+	margin-bottom:4px;
+}
+
+.form_w{
+	max-width:800px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:100px;
+}
+
+/*　画像モーダル表示の不具合対策。ページネーションのpage-linkの競合が不具合を起こす | js_show_modal_big_img　*/
+.page-link{
+	position:static;
+}
