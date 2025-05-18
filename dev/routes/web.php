@@ -28,6 +28,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+	// 公開スケジュール画面
+	Route::get('pub_sched', 'App\Http\Controllers\PubSchedController@index');
+	Route::post('pub_sched/code_gete', 'App\Http\Controllers\PubSchedController@code_gete');
+	
 
 	// 奉仕テンプレ管理画面
 	Route::get('service_template', 'App\Http\Controllers\ServiceTemplateController@index');
