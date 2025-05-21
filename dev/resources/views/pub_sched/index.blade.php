@@ -23,7 +23,12 @@
 
 <div class="container-fluid">
 
-<div id="app"><!-- vue.jsの場所・未使用 --></div>
+<div id="app"></div><!-- vue.jsの場所・未使用 -->
+<div id="app1"><!-- vue.jsの場所 -->
+	  <input v-model="message1">
+	  <div v-bind:title="text1">アマミノクロウサギ:title属性にセット</div>
+	  <div v-bind:class="class1">サキシマハブ:クラス属性にセット</div>
+</div>
 
 
 <button type="button" onclick="test1()">テスト</button>

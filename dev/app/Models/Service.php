@@ -15,6 +15,38 @@ class Service extends CrudBase
 	const UPDATED_AT = 'updated_at';
 	
 	/**
+	 * 指定期間の奉仕データをテンプレート情報付きで取得する（インスタンスメソッド）
+	 *
+	 * @param string $fromDate 開始日 (Y-m-d)
+	 * @param string $toDate 終了日 (Y-m-d)
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function fetchWithTemplateByRange($fromDate, $toDate)
+	{
+		return $this->leftJoin('service_templates', 'services.service_template_id', '=', 'service_templates.id')
+		->whereBetween('services.week_start_date', [$fromDate, $toDate])
+		->select(
+				'services.*',
+				'service_templates.service_name',
+				'service_templates.weekday',
+				'service_templates.conductor_name',
+				'service_templates.sub_conductor_name',
+				'service_templates.start_time'
+				)
+				->orderBy('services.week_start_date')
+				->orderBy('services.sort_no')
+				->get();
+	}
+	
+	public function getServiceNameList()
+	{
+		return \DB::table('service_templates')
+		->where('delete_flg', 0)
+		->pluck('service_name', 'id'); // [id => service_name] の形式で取得
+	}
+	
+	
+	/**
 	 * The attributes that are mass assignable.
 	 * DB保存時、ここで定義してあるDBフィールドのみ保存対象にします。
 	 * ここの存在しないDBフィールドは保存対象外になりますのでご注意ください。
