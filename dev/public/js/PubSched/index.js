@@ -3,6 +3,8 @@ let app; // vue.js
 
 $(()=>{
 	
+	//let scheduleMatrix =
+	
 	const STORAGE_KEY = 'pub_sched_fQZ4hs8';
 
 	// ユーザー情報を初期化（デフォルト値）

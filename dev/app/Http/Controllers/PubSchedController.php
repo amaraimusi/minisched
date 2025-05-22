@@ -66,9 +66,11 @@ class PubSchedController extends CrudBaseController{
 			$templateId = $srv->service_template_id;
 			$weekDate = $srv->week_start_date;
 			
-			$serviceMap[$templateId][$weekDate] = (array)$srv;
+			$test =$srv->toArray();
+
+			$serviceMap[$templateId][$weekDate] =$srv->toArray();
 		}
-		
+
 		// service_templatesテーブルからservice_nameのリストを取得（delete_flg = 0 限定）
 		$serviceNameList = $serviceModel->getServiceNameList();
 		
@@ -81,39 +83,24 @@ class PubSchedController extends CrudBaseController{
 		}
 		
 		foreach ($serviceNameList as $id => $serviceName) {
-			$row = [
-					'service_template_id' => $id,
-					'service_name' => $serviceName,
-			];
 			foreach ($weekDates as $date) {
 				$row[$date] = []; // 詳細情報は空で初期化
 			}
-			$scheduleMatrix[] = $row;
+			$scheduleMatrix[$id] = $row;
 		}
 		
-		
-		// TODO :: $serviceMap のデータを $scheduleMatrix にマッピングしてください。
-		foreach ($services as $srv) {
-			$templateId = $srv->service_template_id;
-			$weekDate = $srv->week_start_date;
+		// $serviceMap のデータを $scheduleMatrix にマッピングする。
+		foreach ($scheduleMatrix as $templateId => &$row) {
 			
-			// 行を探す（縦：service_template_id）
-			foreach ($scheduleMatrix as &$row) {
-				if ($row['service_template_id'] == $templateId) {
-					// 列が存在するか確認（横：week_start_date）
-					if (isset($row[$weekDate])) {
-						$row[$weekDate] = (array)$srv; // サービスデータを格納（オブジェクト→配列）
-					}
-					break;
+			foreach ($weekDates as $weekDate) {
+				if (isset($serviceMap[$templateId][$weekDate])) {
+					$row[$weekDate] = $serviceMap[$templateId][$weekDate];
 				}
 			}
-			unset($row); // foreach の参照を解除
 		}
-		
-		dump($scheduleMatrix);//■■■□□□■■■□□□)
+		unset($row); // 参照の解放（PHPの仕様上必須）
 		
 		$res = [
-				'services' => $services,
 				'service_name_list' => $serviceNameList,
 				'schedule_matrix' => $scheduleMatrix,
 				'week_dates' => $weekDates,
