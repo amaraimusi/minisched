@@ -40,9 +40,11 @@ class Service extends CrudBase
 	
 	public function getServiceNameList()
 	{
-		return \DB::table('service_templates')
+		$res = \DB::table('service_templates')
 		->where('delete_flg', 0)
 		->pluck('service_name', 'id'); // [id => service_name] の形式で取得
+		
+		return $res->toArray();
 	}
 	
 	

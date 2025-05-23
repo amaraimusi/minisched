@@ -25,14 +25,32 @@
 <div class="container-fluid">
 
 <div id="app"></div><!-- vue.jsの場所・未使用 -->
-<div id="app1"><!-- vue.jsの場所 -->
-	  <input v-model="message1">
-	  <div v-bind:title="text1">アマミノクロウサギ:title属性にセット</div>
-	  <div v-bind:class="class1">サキシマハブ:クラス属性にセット</div>
+
+
+<div id="app1"><!-- vueの場所 -->
+	<table border="1" class="table table-bordered">
+		<thead>
+			<tr>
+				<th>奉仕</th>
+				<th v-for="date in weekDates" :key="date">@{{ date }}の週</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="row in scheduleMatrix" :key="row.service_template_id">
+				<td>@{{ row.service_name }}</td>
+				<td v-for="date in weekDates" :key="date">
+					<div v-if="row[date] && Object.keys(row[date]).length > 0">
+						<div>場所: @{{ row[date].location }}</div>
+						<div>司会: @{{ row[date].conductor_name }}</div>
+						<div>備考: @{{ row[date].notes }}</div>
+					</div>
+					<div v-else>-</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 
-
-<button type="button" onclick="test1()">テスト</button>
 
 <div id="err" class="text-danger"></div>
 

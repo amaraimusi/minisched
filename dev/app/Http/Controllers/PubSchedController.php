@@ -100,6 +100,13 @@ class PubSchedController extends CrudBaseController{
 		}
 		unset($row); // 参照の解放（PHPの仕様上必須）
 		
+// 		dump('$serviceNameList');//■■■□□□■■■□□□)
+// 		dump($serviceNameList);//■■■□□□■■■□□□)
+// 		dump('$scheduleMatrix');//■■■□□□■■■□□□)
+// 		dump($scheduleMatrix);//■■■□□□■■■□□□)
+// 		dump('$weekDates');//■■■□□□■■■□□□)
+// 		dump($weekDates);//■■■□□□■■■□□□)
+		
 		$res = [
 				'service_name_list' => $serviceNameList,
 				'schedule_matrix' => $scheduleMatrix,
